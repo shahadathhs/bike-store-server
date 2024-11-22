@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { logger } from '../log/logger'
+import errorResponse from '../res/error.res'
 
 const errorHandler = (
   err: Error,
@@ -7,19 +8,16 @@ const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  // ** Log error message
+  // * Log the error message
   logger.logError.error(err.message)
 
-  // ** Send error response
-  res.status(500).json({
-    message: 'Something went wrong',
-    error:
-      process.env.NODE_ENV === 'development'
-        ? err.message
-        : 'Internal Server Error'
-  })
+  // * Send a generic error message if the error wasn't handled
+  if (!res.headersSent) {
+    res.status(500)
+    errorResponse(res, err)
+  }
 
-  // ** Pass error to the next middleware
+  // * Pass the error to the next middleware
   next()
 }
 

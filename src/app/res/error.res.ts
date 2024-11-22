@@ -1,12 +1,16 @@
 import { Response } from 'express'
 
-const errorResponse = (res: Response, message: string) => {
+const errorResponse = (
+  res: Response,
+  error: Error,
+  message: string = 'Something went wrong'
+) => {
   res.send({
     status: res.statusCode,
     message,
     success: false,
-    error: res.locals.error,
-    stack: res.locals.error?.stack
+    error: error,
+    stack: error.stack ?? null
   })
 }
 
