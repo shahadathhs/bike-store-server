@@ -17,10 +17,7 @@ const getBikeById = async (req: Request, res: Response) => {
 }
 
 const updateBike = async (req: Request, res: Response) => {
-  const result = await bikeServices.updateBikeService(
-    req.params.id,
-    req.body
-  )
+  const result = await bikeServices.updateBikeService(req.params.id, req.body)
   res.send(result)
 }
 

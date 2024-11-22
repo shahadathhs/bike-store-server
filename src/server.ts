@@ -23,24 +23,6 @@ async function start() {
 // ** Call start function **
 start()
 
-process.on('SIGTERM', () => {
-  console.error('SIGTERM is received. Shutting down the server gracefully...')
-  if (server) {
-    server.close(() => {
-      console.error('Server closed due to SIGTERM')
-    })
-  }
-})
-
-process.on('SIGINT', () => {
-  console.error('SIGINT is received. Shutting down the server gracefully...')
-  if (server) {
-    server.close(() => {
-      console.error('Server closed due to SIGINT')
-    })
-  }
-})
-
 process.on('exit', code => {
   console.error(`Process exiting with code: ${code}`)
   if (server) {
