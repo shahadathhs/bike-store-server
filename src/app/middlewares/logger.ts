@@ -1,17 +1,19 @@
 import { Request, Response, NextFunction } from 'express'
-import logger from '../log/logger'
+import { logger } from '../log/logger'
 
-const logMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  logger.info('Incoming Request', {
+const logInfo = logger.logInfo
+
+const APIInfoLogger = (req: Request, res: Response, next: NextFunction) => {
+  logInfo.info('Incoming Request', {
     method: req.method,
     url: req.url,
-    body: req.body,
-    query: req.query,
-    params: req.params,
+    body: req.body ? JSON.stringify(req.body) : 'No body content',
+    query: req.query ? JSON.stringify(req.query) : 'No query content',
+    params: req.params ? JSON.stringify(req.params) : 'No params content',
     headers: req.headers
   })
 
   next()
 }
 
-export default logMiddleware
+export default APIInfoLogger
