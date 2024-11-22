@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { bikeServices } from './bike.services'
 import errorResponse from '../../res/error.res'
 import successResponse from '../../res/success.res'
@@ -15,13 +15,15 @@ import successResponse from '../../res/success.res'
  *
  * @param req - The HTTP request object containing bike data in its body.
  * @param res - The HTTP response object used to send back the desired response.
+ * @param next - The next middleware function in the Express request-response cycle.
  */
-const createBike = async (req: Request, res: Response) => {
+const createBike = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await bikeServices.createBikeService(req.body)
     successResponse(res, result, 'Bike created successfully.')
   } catch (error) {
     errorResponse(res, error as Error, 'Failed to create bike.')
+    next(error)
   }
 }
 

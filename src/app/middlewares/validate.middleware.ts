@@ -8,8 +8,7 @@ export const validateRequest = (schema: ZodSchema, message: string) => {
       schema.parse(req.body) // * Validate request body
       next() // * Proceed to the next middleware/controller if validation passes
     } catch (error) {
-      res.status(400) // * Bad Request for validation errors
-      return errorResponse(res, error as Error, message) // * Handle validation errors
+      return errorResponse(res, error as Error, message, 400) // * Handle validation errors
     }
   }
 }

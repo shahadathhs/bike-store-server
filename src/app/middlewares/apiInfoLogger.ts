@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { logger } from '../log/logger'
 
-const logInfo = logger.logInfo
-
 const apiInfoLogger = (req: Request, res: Response, next: NextFunction) => {
   const logDetails = `
     Method: ${req.method}
@@ -11,10 +9,10 @@ const apiInfoLogger = (req: Request, res: Response, next: NextFunction) => {
     Query: ${req.query && Object.keys(req.query).length > 0 ? JSON.stringify(req.query) : 'No query content'}
     Params: ${req.params && Object.keys(req.params).length > 0 ? JSON.stringify(req.params) : 'No params content'}
     Headers: ${JSON.stringify(req.headers)}
-  `;
+  `
 
-  logInfo.info(`Incoming Request: ${logDetails.trim()}`);
-  next();
-};
+  logger.info(`Incoming Request: ${logDetails.trim()}`)
+  next()
+}
 
 export default apiInfoLogger

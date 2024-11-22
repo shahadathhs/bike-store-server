@@ -1,24 +1,23 @@
-import { NextFunction, Request, Response } from 'express'
-import { logger } from '../log/logger'
+import { Request, Response } from 'express'
 import errorResponse from '../res/error.res'
+import { config } from '../config/config'
 
 const errorHandler = (
-  err: Error,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  err: any,
   req: Request,
-  res: Response,
-  next: NextFunction
+  res: Response
 ) => {
-  // * Log the error message
-  logger.logError.error(err.message)
+  // * Log the error in development mode
+  if (config.env === 'development') console.error(err)
 
   // * Send a generic error message if the error wasn't handled
   if (!res.headersSent) {
-    res.status(500)
-    errorResponse(res, err)
+    const statusCode = err.statusCode || 500
+    const message =
+      config.env === 'development' ? err.message : 'Internal Server Error'
+    errorResponse(res, { message } as Error, statusCode)
   }
-
-  // * Pass the error to the next middleware
-  next()
 }
 
 export default errorHandler
