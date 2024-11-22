@@ -23,7 +23,7 @@ app.use(
 )
 
 // ** middlewares **
-const logger = (req: any, res: Response, next: NextFunction) => {
+const logger = (req: Request, res: Response, next: NextFunction) => {
   console.log('Method: ', req.method)
   console.log('URL: ', req.url)
   console.log('Body: ', req.body)
@@ -36,10 +36,10 @@ const logger = (req: any, res: Response, next: NextFunction) => {
 // ** routes **
 app.get('/', logger, (req: Request, res: Response) => {
   res.send('Welcome to Bike Shop Sever!')
-});
+})
 
 app.get('/api/v1', (req: Request, res: Response) => {
   res.send('This is the root API route!')
-});
+})
 
 export default app
