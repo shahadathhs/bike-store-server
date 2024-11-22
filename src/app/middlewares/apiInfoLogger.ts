@@ -3,7 +3,7 @@ import { logger } from '../log/logger'
 
 const logInfo = logger.logInfo
 
-const APIInfoLogger = (req: Request, res: Response, next: NextFunction) => {
+const apiInfoLogger = (req: Request, res: Response, next: NextFunction) => {
   logInfo.info('Incoming Request', {
     method: req.method,
     url: req.url,
@@ -16,4 +16,4 @@ const APIInfoLogger = (req: Request, res: Response, next: NextFunction) => {
   next()
 }
 
-export default APIInfoLogger
+export default apiInfoLogger
