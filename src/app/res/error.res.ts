@@ -5,7 +5,7 @@ const errorResponse = (
   error: Error,
   message: string = 'Something went wrong'
 ) => {
-  res.send({
+  res.status(res.statusCode).send({
     status: res.statusCode,
     message,
     success: false,

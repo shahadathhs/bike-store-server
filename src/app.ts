@@ -3,6 +3,7 @@ import cors from 'cors'
 import notFound from './app/middlewares/notFound'
 import errorHandler from './app/middlewares/errorHandler'
 import apiInfoLogger from './app/middlewares/apiInfoLogger'
+import { bikeRoutes } from './app/modules/bike/bike.route'
 
 // ** express app **
 const app: Application = express()
@@ -29,9 +30,12 @@ app.use(
 app.get('/', (req: Request, res: Response) => {
   res.send('Welcome to Bike Shop Server!')
 })
-app.get('/api/v1', (req: Request, res: Response) => {
+app.get('/api', (req: Request, res: Response) => {
   res.send('This is the root API route!')
 })
+
+// ** API Routes **
+app.use('/api/products', bikeRoutes)
 
 // ** API Info Logger **
 app.use(apiInfoLogger)
