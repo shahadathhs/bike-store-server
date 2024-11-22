@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 export const bikeSchema = z.object({
   name: z
@@ -16,7 +16,10 @@ export const bikeSchema = z.object({
     .min(0, 'Price must be a non-negative number')
     .positive('Price must be greater than zero'),
   category: z.enum(['Mountain', 'Road', 'Hybrid', 'Electric'], {
-    errorMap: () => ({ message: 'Invalid bike category. Allowed values are Mountain, Road, Hybrid, or Electric.' }),
+    errorMap: () => ({
+      message:
+        'Invalid bike category. Allowed values are Mountain, Road, Hybrid, or Electric.'
+    })
   }),
   description: z
     .string()
@@ -28,5 +31,5 @@ export const bikeSchema = z.object({
     .int('Quantity must be an integer')
     .min(0, 'Quantity must be a non-negative integer')
     .max(1000, 'Quantity cannot exceed 1000'),
-  inStock: z.boolean(),
-});
+  inStock: z.boolean()
+})

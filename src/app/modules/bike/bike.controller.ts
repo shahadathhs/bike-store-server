@@ -1,9 +1,28 @@
 import { Request, Response } from 'express'
 import { bikeServices } from './bike.services'
+import errorResponse from '../../res/error.res'
+import successResponse from '../../res/success.res'
 
+/**
+ * Handles the creation of a new bike.
+ *
+ * Receives HTTP POST requests with bike details in the request body,
+ * passes them to the createBikeService for processing and persists
+ * the new bike in the database.
+ *
+ * On success, sends a success response with the created bike details.
+ * On failure, sends an error response detailing the failure reason.
+ *
+ * @param req - The HTTP request object containing bike data in its body.
+ * @param res - The HTTP response object used to send back the desired response.
+ */
 const createBike = async (req: Request, res: Response) => {
-  const result = await bikeServices.createBikeService(req.body)
-  res.send(result)
+  try {
+    const result = await bikeServices.createBikeService(req.body)
+    successResponse(res, result, 'Bike created successfully.')
+  } catch (error) {
+    errorResponse(res, error as Error, 'Failed to create bike.')
+  }
 }
 
 const getAllBikes = async (req: Request, res: Response) => {

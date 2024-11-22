@@ -3,12 +3,13 @@ import { Response } from 'express'
 const errorResponse = (
   res: Response,
   error: Error,
-  message: string = 'Something went wrong 🔥'
+  message: string = 'Something Went Wrong.',
+  status: number = 500
 ) => {
-  res.status(res.statusCode).send({
-    status: res.statusCode,
-    message,
+  res.status(status).send({
+    status,
     success: false,
+    message,
     error: error,
     stack: error.stack ?? null
   })
