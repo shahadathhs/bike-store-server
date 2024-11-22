@@ -26,6 +26,9 @@ app.use(
   })
 )
 
+// ** API Info Logger **
+app.use(apiInfoLogger)
+
 // ** Default Routes **
 app.get('/', (req: Request, res: Response) => {
   res.send('Welcome to Bike Shop Server!')
@@ -36,9 +39,6 @@ app.get('/api', (req: Request, res: Response) => {
 
 // ** API Routes **
 app.use('/api/products', bikeRoutes)
-
-// ** API Info Logger **
-app.use(apiInfoLogger)
 
 // ** Error Handler **
 app.use(errorHandler)
