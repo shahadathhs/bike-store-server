@@ -1,5 +1,6 @@
-import express, { Application, NextFunction, Request, Response } from 'express'
+import express, { Application, Request, Response } from 'express'
 import cors from 'cors'
+import logMiddleware from './app/middlewares/logger'
 
 // ** express app **
 const app: Application = express()
@@ -22,20 +23,12 @@ app.use(
   })
 )
 
-// ** middlewares **
-const logger = (req: Request, res: Response, next: NextFunction) => {
-  console.log('Method: ', req.method)
-  console.log('URL: ', req.url)
-  console.log('Body: ', req.body)
-  console.log('Query: ', req.query)
-  console.log('Params: ', req.params)
-  console.log('Headers: ', req.headers)
-  next()
-}
+// ** logMiddleware globally **
+app.use(logMiddleware)
 
 // ** routes **
-app.get('/', logger, (req: Request, res: Response) => {
-  res.send('Welcome to Bike Shop Sever!')
+app.get('/', (req: Request, res: Response) => {
+  res.send('Welcome to Bike Shop Server!')
 })
 
 app.get('/api/v1', (req: Request, res: Response) => {

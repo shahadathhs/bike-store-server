@@ -11,12 +11,12 @@ let server: Server
 async function start() {
   // ** Connect to MongoDB **
   await mongoose.connect(DATABASE_URL).then(() => {
-    console.log('DB connected!')
+    console.info('DB connected!')
   })
 
   // ** Start Server **
   server = app.listen(port, () => {
-    console.log(`Bike Store 🚀 server is running on port ${port}!`)
+    console.info(`Bike Store 🚀 server is running on port ${port}!`)
   })
 }
 
@@ -24,28 +24,28 @@ async function start() {
 start()
 
 process.on('SIGTERM', () => {
-  console.log('SIGTERM is received. Shutting down the server gracefully...')
+  console.error('SIGTERM is received. Shutting down the server gracefully...')
   if (server) {
     server.close(() => {
-      console.log('Server closed due to SIGTERM')
+      console.error('Server closed due to SIGTERM')
     })
   }
 })
 
 process.on('SIGINT', () => {
-  console.log('SIGINT is received. Shutting down the server gracefully...')
+  console.error('SIGINT is received. Shutting down the server gracefully...')
   if (server) {
     server.close(() => {
-      console.log('Server closed due to SIGINT')
+      console.error('Server closed due to SIGINT')
     })
   }
 })
 
 process.on('exit', code => {
-  console.log(`Process exiting with code: ${code}`)
+  console.error(`Process exiting with code: ${code}`)
   if (server) {
     server.close(() => {
-      console.log('Server closed on process exit')
+      console.error('Server closed on process exit')
     })
   }
 })
@@ -54,7 +54,7 @@ process.on('uncaughtException', error => {
   console.error('uncaughtException is received. Error details:', error)
   if (server) {
     server.close(() => {
-      console.log('Server closed due to uncaughtException')
+      console.error('Server closed due to uncaughtException')
     })
   }
   process.exit(1)
@@ -64,7 +64,7 @@ process.on('unhandledRejection', reason => {
   console.error('unhandledRejection is received. Reason:', reason)
   if (server) {
     server.close(() => {
-      console.log('Server closed due to unhandledRejection')
+      console.error('Server closed due to unhandledRejection')
     })
   }
   process.exit(1)
