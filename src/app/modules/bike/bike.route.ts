@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { bikeController } from './bike.controller'
 import { validateRequest } from '../../middlewares/validate.middleware'
-import { bikeSchema } from './bike.schema'
+import { bikeSchema, bikeUpdateSchema } from './bike.schema'
 
 const router = Router()
 
@@ -12,7 +12,11 @@ router.post(
 )
 router.get('/', bikeController.getAllBikes)
 router.get('/:productId', bikeController.getBikeById)
-router.put('/:productId', bikeController.updateBike)
+router.put(
+  '/:productId',
+  validateRequest(bikeUpdateSchema, 'Bike Validation Error'),
+  bikeController.updateBike
+)
 router.delete('/:productId', bikeController.deleteBike)
 
 export const bikeRoutes = router

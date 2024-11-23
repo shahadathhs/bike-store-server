@@ -33,3 +33,6 @@ export const bikeSchema = z.object({
     .max(1000, 'Quantity cannot exceed 1000'),
   inStock: z.boolean()
 })
+
+// * Update schema where all fields are optional, but  if a field is provided, it must pass the validation rules for that field.
+export const bikeUpdateSchema = bikeSchema.partial()

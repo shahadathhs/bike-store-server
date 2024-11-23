@@ -85,9 +85,63 @@ const getBikeById = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-const updateBike = async (req: Request, res: Response) => {
-  const result = await bikeServices.updateBikeService(req.params.productId, req.body)
-  res.send(result)
+/**
+ * Handles PUT requests for updating a single bike by its ID.
+ *
+ * Receives the bike ID as a route parameter (productId) and
+ * the fields to be updated as a JSON payload in the request body.
+ * Passes the bike ID and payload to the updateBikeService for processing.
+ *
+ * On success, sends a success response with the updated bike details.
+ * On failure, sends an error response detailing the failure reason.
+ * If the bike is not found, sends a 404 error response.
+ * If the payload is empty, sends a 400 error response.
+ *
+ * @param req - The HTTP request object containing the bike ID in its params and the update fields in its body.
+ * @param res - The HTTP response object used to send back the desired response.
+ * @param next - The next middleware function in the Express request-response cycle.
+ */
+const updateBike = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { productId } = req.params
+    const payload = req.body
+
+    // * Validate bike existence
+    const bike = await bikeServices.getBikeByIdService(productId)
+    if (!bike) {
+      errorResponse(res, new Error('Bike not found.'), 'Bike not found.', 404)
+      return
+    }
+
+    // * Handle case where payload is empty
+    if (Object.keys(payload).length === 0) {
+      errorResponse(
+        res,
+        new Error('No fields to update.'),
+        'No fields to update.',
+        400
+      )
+      return
+    }
+
+    // * Update bike if payload is valid
+    const updatedBike = await bikeServices.updateBikeService(productId, payload)
+
+    if (!updatedBike) {
+      errorResponse(
+        res,
+        new Error('Failed to update bike.'),
+        'Failed to update bike.',
+        500
+      )
+      return
+    }
+
+    successResponse(res, updatedBike, 'Bike updated successfully.')
+  } catch (error) {
+    errorResponse(res, error as Error, 'Failed to update bike.')
+    next(error)
+  }
 }
 
 const deleteBike = async (req: Request, res: Response) => {
