@@ -4,6 +4,7 @@ import notFound from './app/middlewares/notFound'
 import errorHandler from './app/middlewares/errorHandler'
 import apiInfoLogger from './app/middlewares/apiInfoLogger'
 import { bikeRoutes } from './app/modules/bike/bike.route'
+import { orderRoutes } from './app/modules/order/order.route'
 
 // ** express app **
 const app: Application = express()
@@ -39,6 +40,7 @@ app.get('/api', (req: Request, res: Response) => {
 
 // ** API Routes **
 app.use('/api/products', bikeRoutes)
+app.use('/api/orders', orderRoutes)
 
 // ** Error Handler **
 app.use(errorHandler)
