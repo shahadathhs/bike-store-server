@@ -144,9 +144,48 @@ const updateBike = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-const deleteBike = async (req: Request, res: Response) => {
-  const result = await bikeServices.deleteBikeService(req.params.productId)
-  res.send(result)
+  /**
+   * Handles DELETE requests for deleting a single bike by its ID.
+   *
+   * Receives the bike ID as a route parameter (productId) and
+   * passes it to the deleteBikeService for processing.
+   *
+   * On success, sends a success response with the deleted bike details.
+   * On failure, sends an error response detailing the failure reason.
+   * If the bike is not found, sends a 404 error response.
+   *
+   * @param req - The HTTP request object containing the bike ID in its params.
+   * @param res - The HTTP response object used to send back the desired response.
+   * @param next - The next middleware function in the Express request-response cycle.
+   */
+const deleteBike = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { productId } = req.params
+
+    // * Validate bike existence
+    const bike = await bikeServices.getBikeByIdService(productId)
+    if (!bike) {
+      errorResponse(res, new Error('Bike not found.'), 'Bike not found.', 404)
+      return
+    }
+
+    // * Delete bike
+    const deletedBike = await bikeServices.deleteBikeService(productId)
+    if (!deletedBike) {
+      errorResponse(
+        res,
+        new Error('Failed to delete bike.'),
+        'Failed to delete bike.',
+        500
+      )
+      return
+    }
+
+    successResponse(res, {}, 'Bike deleted successfully.')
+  } catch (error) {
+    errorResponse(res, error as Error, 'Failed to delete bike.')
+    next(error)
+  }
 }
 
 export const bikeController = {

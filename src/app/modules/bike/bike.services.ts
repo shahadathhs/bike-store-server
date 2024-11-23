@@ -62,6 +62,13 @@ const updateBikeService = async (
   })
   return result
 }
+
+/**
+ * Deletes a bike from the database by its ID.
+ *
+ * @param id - The ID of the bike to be deleted.
+ * @returns A promise that resolves to the deleted bike object, or null if no bike with the given ID exists.
+ */
 const deleteBikeService = async (id: string): Promise<IBike | null> => {
   const result = await Bike.findByIdAndDelete(id)
   return result
