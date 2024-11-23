@@ -1,10 +1,7 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 export const orderSchema = z.object({
-  email: z
-    .string()
-    .email('Invalid email format')
-    .min(1, 'Email is required'),
+  email: z.string().email('Invalid email format').min(1, 'Email is required'),
 
   product: z
     .string()
@@ -16,7 +13,5 @@ export const orderSchema = z.object({
     .int('Quantity must be an integer')
     .min(1, 'Quantity must be at least 1'),
 
-  totalPrice: z
-    .number()
-    .min(0, 'Total price must be a non-negative number'),
-});
+  totalPrice: z.number().min(0, 'Total price must be a non-negative number')
+})

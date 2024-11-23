@@ -144,20 +144,20 @@ const updateBike = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-  /**
-   * Handles DELETE requests for deleting a single bike by its ID.
-   *
-   * Receives the bike ID as a route parameter (productId) and
-   * passes it to the deleteBikeService for processing.
-   *
-   * On success, sends a success response with the deleted bike details.
-   * On failure, sends an error response detailing the failure reason.
-   * If the bike is not found, sends a 404 error response.
-   *
-   * @param req - The HTTP request object containing the bike ID in its params.
-   * @param res - The HTTP response object used to send back the desired response.
-   * @param next - The next middleware function in the Express request-response cycle.
-   */
+/**
+ * Handles DELETE requests for deleting a single bike by its ID.
+ *
+ * Receives the bike ID as a route parameter (productId) and
+ * passes it to the deleteBikeService for processing.
+ *
+ * On success, sends a success response with the deleted bike details.
+ * On failure, sends an error response detailing the failure reason.
+ * If the bike is not found, sends a 404 error response.
+ *
+ * @param req - The HTTP request object containing the bike ID in its params.
+ * @param res - The HTTP response object used to send back the desired response.
+ * @param next - The next middleware function in the Express request-response cycle.
+ */
 const deleteBike = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { productId } = req.params

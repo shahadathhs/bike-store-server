@@ -15,7 +15,6 @@ export const logger = createLogger({
   transports: [
     new transports.Console({
       format: format.combine(format.colorize(), format.simple())
-    }),
-    new transports.File({ filename: 'logs/api.log', level: 'info' })
+    })
   ]
 })

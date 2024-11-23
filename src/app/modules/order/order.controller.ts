@@ -5,7 +5,6 @@ import { IOrder } from './order.interface'
 import { orderServices } from './order.services'
 import { bikeServices } from '../bike/bike.services'
 
-
 /**
  * Handles POST requests for creating a new order.
  *
