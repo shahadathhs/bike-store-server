@@ -27,9 +27,15 @@ const createBike = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-const getAllBikes = async (req: Request, res: Response) => {
-  const result = await bikeServices.getAllBikesService()
-  res.send(result)
+const getAllBikes = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const searchTerm = req.query.searchTerm as string
+    const result = await bikeServices.getAllBikesService(searchTerm)
+    successResponse(res, result, 'Bikes retrieved successfully.')
+  } catch (error) {
+    errorResponse(res, error as Error, 'Failed to retrieve bikes.')
+    next(error)
+  }
 }
 
 const getBikeById = async (req: Request, res: Response) => {

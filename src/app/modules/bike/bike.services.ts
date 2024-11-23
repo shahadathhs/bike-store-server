@@ -6,7 +6,17 @@ const createBikeService = async (payload: IBike): Promise<IBike> => {
   return result
 }
 
-const getAllBikesService = async (): Promise<IBike[]> => {
+const getAllBikesService = async (searchTerm?: string): Promise<IBike[]> => {
+  if (searchTerm) {
+    const result = await Bike.find({
+      $or: [
+        { name: { $regex: searchTerm, $options: 'i' } },
+        { brand: { $regex: searchTerm, $options: 'i' } },
+        { category: { $regex: searchTerm, $options: 'i' } },
+      ]
+    })
+    return result
+  }
   const result = await Bike.find({})
   return result
 }
