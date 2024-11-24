@@ -3,6 +3,10 @@
 ## **Overview**
 The Bike Store application is a comprehensive solution for managing bike products, processing orders, and handling inventory. This application allows users to view available bikes, place orders, and tracks the total revenue generated from orders. It integrates product inventory management and order processing with a focus on real-time data.
 
+## Live Link: https://bike-store-node.vercel.app
+
+## Video Presentation: https://drive.google.com/file/d/1mlw2qSAOud0xY2Fwm2DBtaQ1gYH4GQqx/view?usp=drive_link
+
 ---
 
 ## **Features**
